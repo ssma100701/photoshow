@@ -1,5 +1,31 @@
 @extends('layouts.app')
 
 @section('content')
-    <h3>Ablums</h3>
+    @if (count($albums) > 0)
+        <?php
+            $colcount = count($albums);
+            $i = 1;
+        ?>
+        <div id="albums">
+            <div class="row text-center">
+                @foreach ($albums as $album)
+                    <div class="columns medium-4 {{ $i == $colcount ? 'end': ''}}">
+                        <a href="/albums/{{ $album->id }}">
+                            <img src="storage/album_covers/{{ $album->cover_image }}" alt="{{ $album->name }}" class="thumbnail">
+                        </a>
+                        <br>
+                        <h4>{{ $album->name }}</h4>
+
+                    @if ($i % 3 == 0)
+                        </div></div><div class="row text-center">
+                    @else
+                        </div>
+                    @endif
+                    <?php $i++; ?>
+                @endforeach
+            </div>
+        </div>
+    @else
+        <p>No Albums To Display</p>
+    @endif
 @endsection
